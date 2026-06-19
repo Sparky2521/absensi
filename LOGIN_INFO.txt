@@ -1,0 +1,117 @@
+╔════════════════════════════════════════════════════════════════╗
+║                    🔐 LOGIN INFORMATION                        ║
+╚════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────┐
+│  ADMIN CREDENTIALS                                             │
+├────────────────────────────────────────────────────────────────┤
+│  📧 Email     : admin@absensi.com                              │
+│  🔑 Password  : Admin123!@#                                    │
+│  👤 Role      : Administrator                                  │
+│  📛 Name      : Administrator System                           │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  HOW TO USE                                                    │
+├────────────────────────────────────────────────────────────────┤
+│  1. Pastikan sudah setup Supabase & jalankan SQL script       │
+│     File: create-admin-user.sql                                │
+│                                                                 │
+│  2. Jalankan aplikasi:                                         │
+│     npm run dev                                                │
+│                                                                 │
+│  3. Buka browser:                                              │
+│     http://localhost:3000                                      │
+│                                                                 │
+│  4. Login dengan kredensial di atas                            │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  FIRST TIME SETUP (WAJIB SETELAH LOGIN!)                      │
+├────────────────────────────────────────────────────────────────┤
+│  ⚠️  Setup Geofencing:                                         │
+│     • Klik menu "Pengaturan"                                   │
+│     • Masukkan koordinat kantor & radius                       │
+│     • Simpan                                                    │
+│                                                                 │
+│  ⚠️  Tanpa setup geofencing, karyawan tidak bisa absensi!     │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  CREATING ADMIN USER                                           │
+├────────────────────────────────────────────────────────────────┤
+│  Option 1: Menggunakan File SQL (MUDAH)                       │
+│  • Buka Supabase Dashboard → SQL Editor                       │
+│  • Buka file: create-admin-user.sql                            │
+│  • Copy semua isi file                                         │
+│  • Paste di SQL Editor                                         │
+│  • Klik "Run"                                                  │
+│  • Done! User sudah dibuat                                     │
+│                                                                 │
+│  Option 2: Manual (DETAIL)                                     │
+│  • Lihat file: ADMIN_CREDENTIALS.txt                           │
+│  • Follow step-by-step instructions                            │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  SECURITY NOTES                                                │
+├────────────────────────────────────────────────────────────────┤
+│  ⚠️  UNTUK PRODUCTION:                                         │
+│     • GANTI password default dengan yang lebih kuat           │
+│     • Jangan share credentials                                 │
+│     • Enable 2FA di Supabase                                   │
+│     • Regular password rotation                                │
+│                                                                 │
+│  💡 Password Requirements (Production):                        │
+│     • Min. 12 characters                                       │
+│     • Kombinasi: huruf besar/kecil, angka, simbol            │
+│     • Contoh: MyStr0ng!P@ssw0rd2024                            │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  ADDITIONAL RESOURCES                                          │
+├────────────────────────────────────────────────────────────────┤
+│  📄 ADMIN_CREDENTIALS.txt  - Detail lengkap & troubleshooting │
+│  📄 create-admin-user.sql  - SQL script untuk buat admin      │
+│  📄 QUICKSTART.md          - Setup guide lengkap              │
+│  📄 QUICK_FIX.txt          - Setup cepat 3 langkah            │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  TROUBLESHOOTING                                               │
+├────────────────────────────────────────────────────────────────┤
+│  ❌ "Invalid login credentials"                                │
+│     → Check typo di email/password (case-sensitive)           │
+│     → Pastikan user sudah dibuat di Supabase                  │
+│                                                                 │
+│  ❌ Login berhasil tapi masuk ke employee dashboard            │
+│     → Check role di user metadata harus "admin"               │
+│     → Re-run SQL script untuk update metadata                 │
+│                                                                 │
+│  ❌ "User not found"                                            │
+│     → Jalankan create-admin-user.sql                           │
+│     → Verify di Supabase → Authentication → Users             │
+└────────────────────────────────────────────────────────────────┘
+
+┌────────────────────────────────────────────────────────────────┐
+│  QUICK VERIFICATION                                            │
+├────────────────────────────────────────────────────────────────┤
+│  Untuk memastikan admin user sudah benar, jalankan di SQL:    │
+│                                                                 │
+│  SELECT                                                         │
+│      u.email,                                                   │
+│      u.raw_user_meta_data->>'role' as role,                   │
+│      e.position,                                                │
+│      e.is_active                                                │
+│  FROM auth.users u                                              │
+│  LEFT JOIN employees e ON e.user_id = u.id                     │
+│  WHERE u.email = 'admin@absensi.com';                          │
+│                                                                 │
+│  Expected: role = "admin", is_active = true                    │
+└────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════╗
+║  REMEMBER: Setup geofencing setelah login pertama kali!       ║
+╚════════════════════════════════════════════════════════════════╝
+
+✨ Happy Administrating!

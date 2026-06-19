@@ -1,0 +1,133 @@
+================================================================================
+                    🚀 QUICK FIX - 3 LANGKAH MUDAH
+================================================================================
+
+Error yang Anda lihat NORMAL! Ikuti 3 langkah ini:
+
+--------------------------------------------------------------------------------
+LANGKAH 1: INSTALL DEPENDENCIES (2 menit)
+--------------------------------------------------------------------------------
+
+Buka terminal di folder project ini, lalu jalankan:
+
+    npm install
+
+Tunggu hingga selesai.
+
+--------------------------------------------------------------------------------
+LANGKAH 2: SETUP SUPABASE (5 menit)
+--------------------------------------------------------------------------------
+
+A. Buat Project Supabase:
+   1. Buka: https://supabase.com
+   2. Sign up / Login
+   3. Klik "New Project"
+   4. Isi nama project dan password
+   5. Tunggu ~2 menit
+
+B. Copy API Credentials:
+   1. Di Supabase Dashboard, klik Settings → API
+   2. Copy "Project URL" dan "anon public key"
+
+C. Update .env.local:
+   1. Buka file: .env.local
+   2. Ganti baris ini dengan credentials Anda:
+      
+      NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
+
+   3. Simpan file
+
+D. Setup Database:
+   1. Di Supabase Dashboard, klik SQL Editor
+   2. Copy SEMUA isi file: supabase-schema.sql
+   3. Paste di SQL Editor
+   4. Klik "Run"
+
+E. Buat Storage Bucket:
+   1. Klik Storage → "Create bucket"
+   2. Name: face-descriptors
+   3. Public: OFF
+   4. Create
+
+E. Buat Storage Bucket:
+   1. Di SQL Editor, buka file: create-admin-user.sql
+   2. Copy SEMUA isi file tersebut
+   3. Paste di SQL Editor
+   4. Klik "Run"
+   
+   Atau gunakan quick query ini (GANTI email & password jika perlu):
+
+   INSERT INTO auth.users (
+       instance_id, id, aud, role, email, encrypted_password,
+       email_confirmed_at, raw_user_meta_data, raw_app_meta_data,
+       created_at, updated_at, confirmation_token, email_change,
+       email_change_token_new, recovery_token
+   ) VALUES (
+       '00000000-0000-0000-0000-000000000000',
+       gen_random_uuid(),
+       'authenticated',
+       'authenticated',
+       'admin@absensi.com',
+       crypt('Admin123!@#', gen_salt('bf')),
+       NOW(),
+       '{"role": "admin", "full_name": "Administrator System"}'::jsonb,
+       '{"provider": "email", "providers": ["email"]}'::jsonb,
+       NOW(), NOW(), '', '', '', ''
+   );
+
+   INSERT INTO employees (user_id, full_name, email, position, department, is_active)
+   SELECT id, 'Administrator System', 'admin@absensi.com', 'System Administrator', 'Management', true
+   FROM auth.users WHERE email = 'admin@absensi.com';
+
+--------------------------------------------------------------------------------
+LANGKAH 3: JALANKAN APLIKASI (10 detik)
+--------------------------------------------------------------------------------
+
+Di terminal, jalankan:
+
+    npm run dev
+
+Lalu buka browser ke: http://localhost:3000
+
+Login dengan:
+  📧 Email    : admin@absensi.com
+  🔑 Password : Admin123!@#
+
+(Lihat file ADMIN_CREDENTIALS.txt untuk detail lengkap)
+
+================================================================================
+
+✅ SELESAI! Aplikasi sudah berjalan!
+
+Jangan lupa: Setup geofencing di menu "Pengaturan" setelah login sebagai admin.
+
+================================================================================
+
+📚 Butuh bantuan lebih detail?
+
+- Baca: START_HERE.md (overview)
+- Baca: QUICKSTART.md (step-by-step dengan screenshot mental)
+- Baca: SETUP.md (penjelasan lengkap)
+
+================================================================================
+
+🐛 Troubleshooting:
+
+Error: "Module not found"
+→ Jalankan: npm install
+
+Error: "relation does not exist"
+→ Anda belum jalankan supabase-schema.sql
+
+Error: "Invalid credentials"
+→ Check typo di email/password saat buat admin user
+
+Page tidak load
+→ Restart server: Ctrl+C, lalu npm run dev lagi
+
+================================================================================
+
+🎉 Enjoy your attendance system!
+
+================================================================================

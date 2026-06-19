@@ -1,0 +1,130 @@
+================================================================================
+                    🚀 QUICK FIX - 3 LANGKAH MUDAH (UPDATED)
+================================================================================
+
+Error yang Anda lihat NORMAL! Ikuti 3 langkah ini:
+
+--------------------------------------------------------------------------------
+LANGKAH 1: INSTALL DEPENDENCIES (2 menit)
+--------------------------------------------------------------------------------
+
+⚠️ CATATAN: Anda perlu Node.js terinstall terlebih dahulu!
+   Jika belum, baca: INSTALL_NODEJS.md
+
+Buka terminal di folder project ini, lalu jalankan:
+
+    npm install
+
+Tunggu hingga selesai.
+
+--------------------------------------------------------------------------------
+LANGKAH 2: SETUP SUPABASE (7 menit)
+--------------------------------------------------------------------------------
+
+A. Buat Project Supabase:
+   1. Buka: https://supabase.com
+   2. Sign up / Login
+   3. Klik "New Project"
+   4. Isi nama project dan password
+   5. Tunggu ~2 menit
+
+B. Copy API Credentials:
+   1. Di Supabase Dashboard, klik Settings → API
+   2. Copy "Project URL" dan "anon public key"
+
+C. Update .env.local:
+   1. Buka file: .env.local
+   2. Ganti baris ini dengan credentials Anda:
+      
+      NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+      NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJxxx...
+
+   3. Simpan file
+
+D. Setup Database + Admin User (ALL-IN-ONE):
+   1. Di Supabase Dashboard, klik SQL Editor
+   2. Buka file: setup-database-complete.sql ⭐
+   3. Copy SEMUA isi file (Ctrl+A, Ctrl+C)
+   4. Paste di SQL Editor (Ctrl+V)
+   5. Klik "Run"
+   6. Tunggu hingga selesai (~10 detik)
+   
+   ✅ Ini akan membuat:
+      • Semua tables (employees, attendance_records, dll)
+      • RLS policies & indexes
+      • Functions & triggers
+      • Admin user: admin@absensi.com
+   
+   ⚠️ PENTING: Gunakan file setup-database-complete.sql,
+               BUKAN supabase-schema.sql + create-admin-user.sql!
+
+E. Buat Storage Bucket (OPTIONAL - untuk face recognition):
+   1. Di Supabase, klik Storage → "Create bucket"
+   2. Name: face-descriptors
+   3. Public: OFF
+   4. Klik "Create"
+
+--------------------------------------------------------------------------------
+LANGKAH 3: JALANKAN APLIKASI (10 detik)
+--------------------------------------------------------------------------------
+
+Di terminal, jalankan:
+
+    npm run dev
+
+Lalu buka browser ke: http://localhost:3000
+
+Login dengan:
+  📧 Email    : admin@absensi.com
+  🔑 Password : Admin123!@#
+
+(Lihat file LOGIN_INFO.txt untuk detail lengkap)
+
+================================================================================
+
+✅ SELESAI! Aplikasi sudah berjalan!
+
+⚠️ WAJIB: Setup geofencing setelah login!
+   1. Login sebagai admin
+   2. Klik menu "Pengaturan"
+   3. Masukkan koordinat & radius kantor
+   4. Simpan
+
+Tanpa setup geofencing, karyawan tidak bisa absensi!
+
+================================================================================
+
+📚 File Penting:
+
+- setup-database-complete.sql  ⭐ Gunakan file ini untuk setup database!
+- LOGIN_INFO.txt               → Kredensial admin
+- FIX_DATABASE_ERROR.md        → Troubleshooting error database
+- INSTALL_NODEJS.md            → Cara install Node.js
+- QUICKSTART.md                → Step-by-step lengkap
+
+================================================================================
+
+🐛 Troubleshooting:
+
+Error: "relation employees does not exist"
+→ Anda belum jalankan setup-database-complete.sql
+→ Baca: FIX_DATABASE_ERROR.md
+
+Error: "Module not found"
+→ Jalankan: npm install
+
+Error: "npm is not recognized"
+→ Install Node.js dulu (INSTALL_NODEJS.md)
+
+Error: "Invalid credentials"
+→ Check typo di email/password
+→ Pastikan database sudah disetup
+
+Page tidak load
+→ Restart server: Ctrl+C, lalu npm run dev lagi
+
+================================================================================
+
+🎉 Enjoy your attendance system!
+
+================================================================================

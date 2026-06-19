@@ -2,6 +2,18 @@
 
 Aplikasi web absensi karyawan dengan face recognition dan geofencing menggunakan Next.js dan Supabase.
 
+## ⚠️ PENTING: Baca Ini Dulu!
+
+**Jika Anda melihat error "Missing Supabase environment variables"** - Ini NORMAL!
+
+✅ **Semua code sudah diperbaiki dan siap digunakan**
+
+❗ **Yang perlu dilakukan**: Setup Supabase (hanya 5 menit!)
+
+👉 **MULAI DI SINI**: Baca file `START_HERE.md` atau `QUICKSTART.md`
+
+---
+
 ## 🚀 Fitur Utama
 
 ### Untuk Karyawan
@@ -359,7 +371,10 @@ Jika ada pertanyaan atau masalah, silakan buat issue di repository ini.
 ---
 
 Dibuat dengan ❤️ menggunakan Next.js dan Supabase
-#   a b s e n s i  
- #   a b s e n s i  
- #   a b s e n s i  
+#   a b s e n s i 
+ 
+ #   a b s e n s i 
+ 
+ #   a b s e n s i 
+ 
  

@@ -1,0 +1,208 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                                                            ║
+║                    ⭐ USE THIS FILE FOR DATABASE SETUP ⭐                  ║
+║                                                                            ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+┌────────────────────────────────────────────────────────────────────────────┐
+│                                                                            │
+│  FILE TO RUN: setup-database-safe.sql ⭐ (UPDATED - ERROR FIXED!)         │
+│                                                                            │
+│  Alternative: setup-database-complete.sql (also works now)                │
+│                                                                            │
+│  ⚠️ DO NOT RUN: create-admin-user.sql (that's for later!)                 │
+│                                                                            │
+└────────────────────────────────────────────────────────────────────────────┘
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                           HOW TO RUN (3 STEPS)                             ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+STEP 1: Open Supabase SQL Editor
+   └─> Go to: https://app.supabase.com
+   └─> Login to your project
+   └─> Click: SQL Editor (in left sidebar)
+   └─> Click: "New query"
+
+STEP 2: Copy the SQL Script
+   └─> Open file: setup-database-safe.sql ⭐ (in VS Code)
+   └─> Select ALL content: Ctrl+A
+   └─> Copy: Ctrl+C
+
+STEP 3: Run the Script
+   └─> Paste in SQL Editor: Ctrl+V
+   └─> Click: "Run" button (or press Ctrl+Enter)
+   └─> Wait: ~10 seconds
+   └─> Check for: "Database setup complete!" message
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                            WHAT THIS DOES                                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+✅ Creates 4 tables:
+   • employees
+   • attendance_records
+   • geofence_config
+   • audit_logs
+
+✅ Sets up security (RLS policies)
+
+✅ Creates indexes for performance
+
+✅ Creates functions & triggers
+
+✅ Creates ADMIN USER:
+   📧 Email: admin@absensi.com
+   🔑 Password: Admin123!@#
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                         AFTER RUNNING SUCCESS                              ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+You should see these messages in SQL Editor:
+
+NOTICE: Database setup complete!
+NOTICE: Admin login credentials:
+NOTICE: Email: admin@absensi.com
+NOTICE: Password: Admin123!@#
+
+✅ If you see this, setup is SUCCESSFUL!
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                              NEXT STEPS                                    ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+1. Close this file
+
+2. Create storage bucket (optional, for face recognition):
+   └─> Supabase Dashboard → Storage
+   └─> Create bucket: "face-descriptors"
+   └─> Make it private (NOT public)
+
+3. Install dependencies:
+   └─> npm install
+
+4. Run application:
+   └─> npm run dev
+
+5. Login:
+   └─> Open: http://localhost:3000
+   └─> Email: admin@absensi.com
+   └─> Password: Admin123!@#
+
+6. Setup geofencing (MANDATORY):
+   └─> Login as admin
+   └─> Click: Pengaturan menu
+   └─> Enter coordinates & radius
+   └─> Save
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                           TROUBLESHOOTING                                  ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+❌ Error: "duplicate key value violates unique constraint"
+   → SOLUTION: Use setup-database-safe.sql instead!
+   → This version handles duplicates automatically
+
+❌ Error: "there is no unique or exclusion constraint"
+   → SOLUTION: Use setup-database-safe.sql ⭐
+   → This version is fixed and safer
+
+❌ Error: "permission denied"
+   → SOLUTION: Make sure you're logged in as project owner in Supabase Dashboard
+
+❌ No success message shown
+   → SOLUTION: Scroll down in Results panel to see NOTICE messages
+   → Or run verification query (see below)
+
+❌ Error: "syntax error"
+   → SOLUTION: Make sure you copied ALL content from file
+   → Try: Ctrl+A in the file, then Ctrl+C
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                        VERIFICATION QUERIES                                ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+After running setup, verify with these queries:
+
+1. Check tables created:
+   
+   SELECT tablename FROM pg_tables WHERE schemaname = 'public';
+   
+   Expected: employees, attendance_records, geofence_config, audit_logs
+
+2. Check admin user:
+   
+   SELECT 
+       u.email,
+       u.raw_user_meta_data->>'role' as role,
+       e.full_name
+   FROM auth.users u
+   LEFT JOIN employees e ON e.user_id = u.id
+   WHERE u.email = 'admin@absensi.com';
+   
+   Expected: admin@absensi.com with role='admin'
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                            IMPORTANT NOTES                                 ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+⚠️ USE CORRECT FILE:
+   ✅ YES: setup-database-complete.sql
+   ❌ NO:  create-admin-user.sql (that's for adding admin to existing DB)
+   ❌ NO:  supabase-schema.sql (that's tables only, no admin)
+
+⚠️ COPY ALL CONTENT:
+   Make sure you copy the ENTIRE file
+   Use Ctrl+A to select all, then Ctrl+C to copy
+
+⚠️ RUN ONCE:
+   You only need to run this ONCE per Supabase project
+   If you get "duplicate" errors, it means it's already done
+
+⚠️ SAVE CREDENTIALS:
+   Email: admin@absensi.com
+   Password: Admin123!@#
+   Change password for production use!
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                              FILES GUIDE                                   ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+📄 setup-database-safe.sql ⭐⭐ ← RUN THIS! (BEST - ERROR FIXED!)
+   All-in-one solution with better error handling
+   
+📄 setup-database-complete.sql ⭐ ← Also works (fixed version)
+   All-in-one solution, creates everything
+
+📄 create-admin-user.sql
+   For adding admin to EXISTING database only
+
+📄 supabase-schema.sql  
+   For creating tables only (no admin user)
+
+📄 WHICH_SQL_TO_RUN.md
+   Detailed guide on which file to use
+
+📄 FIX_DATABASE_ERROR.md
+   Troubleshooting database errors
+
+📄 LOGIN_INFO.txt
+   Admin credentials reference
+
+╔════════════════════════════════════════════════════════════════════════════╗
+║                                SUMMARY                                     ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+1. Open Supabase SQL Editor
+2. Copy ALL content from: setup-database-safe.sql ⭐
+3. Paste and Run
+4. Wait for success message
+5. Done! Admin user ready to use
+
+Email: admin@absensi.com
+Password: Admin123!@#
+
+🚀 Now you can run the application!
+
+╚════════════════════════════════════════════════════════════════════════════╝
