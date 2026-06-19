@@ -34,3 +34,10 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# face recognition models (too large for git)
+/public/models/
+
+# IDE
+.vscode/
+.idea/
